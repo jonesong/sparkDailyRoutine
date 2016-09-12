@@ -1,0 +1,15 @@
+#parse("/velocity/layout.vm") #@mainLayout()
+
+<h1>List of Users</h1>
+
+<p></p>
+<p></p>
+
+<label>Select a User</label>
+<select type='text'> 
+		#foreach($user in $users)
+			<option value="$user.getId()">$user.getUsername()</option> 
+		#end
+</select>
+
+#end

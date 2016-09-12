@@ -1,0 +1,63 @@
+#parse("/velocity/layout.vm")
+#@mainLayout()
+	
+	<div class="panel panel-default">
+	<div class="panel-heading">
+		<span class="lead">
+			#if ($updated)
+				$project.getName() has been updated.
+				#else
+				Edit $project.getName()'s project
+			#end
+		</span>
+	</div>
+		<form id="project" action="/project/" method="post">
+  		<input id="projectId" name="projectId" type="hidden" value="$project.getId()">
+		<table class="table table-hover">
+			<thead>
+				<tr>
+					<th>Project Name</th>
+					<th>Project Note</th>
+				   	<th width="100"></th>
+				</tr>
+			</thead>
+		    <tbody>
+				<tr>
+					<td><input id="name" name="name" type="text" value="$project.getName()" required></td>
+					<td><input id="note" name="note" type="text" value="$project.getNote()"></td>
+					<td><input type="submit" value="$msg.get("PROJECT_UPDATE")" class="btn btn-update custom-width-submit"></td>
+				</tr>
+			</tbody>
+		</table>
+		</form>
+	</div>
+	
+	<h2>$msg.get("TASK_LIST")</h2>
+	
+	<table>
+		<thead>
+			<tr>
+				<th>Task Name</th>
+				<th>Task Note</th>
+			   	<th width="100"></th>
+			    <th width="100"></th>
+				</tr>
+		</thead>
+		<tbody>
+			#foreach($task in $tasks)
+				<tr>
+					<td>$task.getName()</td>
+					<td>$task.getNote()</td>
+					<td><a href="$WebPath.getTASKS()$task.getId()" class="btn btn-success custom-width">edit</a></td>
+					<td><a href="$WebPath.getTASKS()$task.getId()" class="btn btn-danger custom-width">delete</a></td>
+				</tr>
+			#end
+		</tbody>
+	</table>
+	
+	<p></p>
+	<a href="/task/new/">Add New Task</a>
+	
+	<p></p>
+	<a href="/project/">Return to Projects</a>
+#end

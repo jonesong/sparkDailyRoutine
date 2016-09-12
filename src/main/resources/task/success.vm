@@ -1,0 +1,10 @@
+#parse("/velocity/layout.vm")
+#@mainLayout()
+
+<h1>Success!</h1>
+
+Your Task <strong>$task.getName()</strong> has been saved.
+<p></p>
+<a href="/project/$currentProjectId/">Return to Task List</a>
+
+#end

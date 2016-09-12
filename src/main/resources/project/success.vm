@@ -1,0 +1,10 @@
+#parse("/velocity/layout.vm")
+#@mainLayout()
+
+<h1>Success!</h1>
+
+Your Project <strong>$project.getName()</strong> has been saved.
+<p></p>
+<a href="/project/">View projects</a>
+
+#end

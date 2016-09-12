@@ -1,0 +1,14 @@
+#parse("/velocity/layout.vm")
+#@mainLayout()
+
+<div class="panel panel-default">
+	<div class="panel-heading">$msg.get("TASK_NEW")</div>
+		<form id="task" action="/task/success/" method="post">
+			<input type="text" name="name" placeholder="$msg.get("TASK_NAME")" value="" required autofocus>
+			<input type="submit" value="$msg.get("TASK_NEW")" class="btn btn-update custom-width-submit">
+		</form>	
+</div>
+
+<a href="/project/$currentProjectId/">Return to Project</a>
+
+#end

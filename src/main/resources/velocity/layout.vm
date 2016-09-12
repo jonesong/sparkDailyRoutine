@@ -1,0 +1,37 @@
+#macro(mainLayout)
+<html>
+<head>
+    <title>Spark Daily Routines</title>
+    <link rel="stylesheet" href="/main.css">
+    <link rel="icon" href="/favicon.png">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+</head>
+<body>
+<header>
+    <nav>
+        <a href="$WebPath.getINDEX()"><img id="logo" src="/img/logo_deepblue.png" alt="Spark Daily Routines"></a>
+        <ul id="menu">
+            <li><a href="$WebPath.getPROJECTS()">View All Projects</a></li>
+            #if($currentUser)
+                <li>
+                    <form method="post" action="$WebPath.getLOGOUT()">
+                        <button id="logout">$msg.get("COMMON_NAV_LOGOUT")</button>
+                    </form>
+                </li>
+            #else
+                <li><a href="$WebPath.getLOGIN()"">$msg.get("COMMON_NAV_LOGIN")</a></li>
+            #end
+        </ul>
+    </nav>
+</header>
+<main>
+    <div id="content">
+        $bodyContent
+    </div>
+</main>
+<footer>
+    Hello World
+</footer>
+</body>
+</html>
+#end

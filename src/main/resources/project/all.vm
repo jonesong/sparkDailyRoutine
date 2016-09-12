@@ -1,0 +1,29 @@
+#parse("/velocity/layout.vm")
+#@mainLayout()
+
+<div class="panel panel-default">
+	<div class="panel-heading">$currentUser$msg.get("PROJECTS_HEADING_ALL")</div>
+		<table>
+			<thead>
+				<tr>
+					<th>Project Name</th>
+					<th>Project Note</th>
+				   	<th width="100"></th>
+				    <th width="100"></th>
+				</tr>
+			</thead>
+		    <tbody>
+			#foreach($project in $projects)
+				<tr>
+					<td>$project.getName()</td>
+					<td>$project.getNote()</td>
+					<td><a href="$WebPath.getPROJECTS()$project.getId()" class="btn btn-success custom-width">edit</a></td>
+					<td><a href="$WebPath.getPROJECTS()$project.getId()" class="btn btn-danger custom-width">delete</a></td>
+				</tr>
+			#end
+		    </tbody>
+		</table>
+</div>
+<p></p>
+<a href="/project/new/">Add New Project</a>
+#end
