@@ -3,6 +3,7 @@
 <head>
     <title>Spark Daily Routines</title>
     <link rel="stylesheet" href="/main.css">
+    <script src="/dialogbox.js"></script>
     <link rel="icon" href="/favicon.png">
     <meta name="viewport" content="width=device-width, initial-scale=1">
 </head>
@@ -30,7 +31,7 @@
     </div>
 </main>
 <footer>
-    Hello World
+    $msg.get("COMMON_FOOTER_TEXT")
 </footer>
 </body>
 </html>

@@ -15,9 +15,10 @@ public class ProjectEntity {
 	private String note;
 	private char deleted ='1';
 	
-	public ProjectEntity(int userId, String name){
+	public ProjectEntity(int userId, String name, String note){
 		this.user_id = userId;
 		this.name = name;
+		this.note = note;
 	}
 	
 	public ProjectEntity(String id, String name, String note){
@@ -49,17 +50,12 @@ public class ProjectEntity {
 	}
 	
 	public void save() {
-		String sql = "INSERT INTO projects(user_id, name) "
-//				+ "VALUES (:currentUser, :name)";
-				+ "VALUES (:user_id, :name)";
+		String sql = "INSERT INTO projects(user_id, name, note) "
+				+ "VALUES (:user_id, :name, :note)";
 		try (Connection con = DB.sql2o.open()) {
-			ProjectEntity project = new ProjectEntity(getUser_id(),getName());
+			ProjectEntity project = new ProjectEntity(getUser_id(),getName(),getNote());
 			con.createQuery(sql).bind(project).executeUpdate();
 			project = null;
-//			this.id = (int) con.createQuery(sql, true).addParameter("currentUser", this.user_id)
-//					.addParameter("name", this.name).executeUpdate().getKey();
-//			con.createQuery(sql).addParameter("currentUser", this.user_id)
-//			.addParameter("name", this.name).executeUpdate();
 		}
 	}
 	
@@ -68,6 +64,14 @@ public class ProjectEntity {
 		try (Connection con = DB.sql2o.open()) {
 			con.createQuery(sql).addParameter("name", this.name).addParameter("note", this.note).addParameter("id", this.id).executeUpdate();
 //			System.out.println(id + name + note);
+		}
+	}
+	
+	//change the deleted flag into 0
+	public void delete() {
+		String sql = "UPDATE projects SET deleted = 0 WHERE id = :id";
+		try (Connection con = DB.sql2o.open()) {
+			con.createQuery(sql).addParameter("id", this.id).executeUpdate();
 		}
 	}
 	

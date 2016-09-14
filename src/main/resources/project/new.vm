@@ -3,12 +3,13 @@
 
 <div class="panel panel-default">
 	<div class="panel-heading">$msg.get("PROJECT_NEW")</div>
-		<form id="project" action="/project/success/" method="post">
+		<form action="/project/success/" method="post">
 			<input type="text" name="name" placeholder="$msg.get("PROJECT_NAME")" value="" required autofocus>
+			<input type="text" name="note" placeholder="$msg.get("PROJECT_NOTE")" value="">
 			<input type="submit" value="$msg.get("PROJECT_NEW")" class="btn btn-update custom-width-submit">
 		</form>	
 </div>
 
-<a href="/project/">Return to Projects</a>
+<a href="/project/">Return to $msg.get("PROJECTS_HEADING_ALL")</a>
 
 #end

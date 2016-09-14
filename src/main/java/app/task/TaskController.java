@@ -4,6 +4,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 import app.login.LoginController;
+import app.project.ProjectEntity;
 import app.task.TaskEntity;
 import app.util.Path;
 import app.util.ViewUtil;
@@ -27,7 +28,7 @@ public class TaskController {
     	LoginController.ensureUserIsLoggedIn(request, response);
     	if (clientAcceptsHtml(request)) {
     		Map<String, Object> model = new HashMap<>();
-    		TaskEntity task = new TaskEntity(Integer.parseInt(getSessionCurrentProjectId(request)), getQueryName(request));
+    		TaskEntity task = new TaskEntity(Integer.parseInt(getSessionCurrentProjectId(request)), getQueryName(request), getQueryNote(request), getQueryDueDate(request));
     		task.save();
     		model.put("task", task);
     		return ViewUtil.render(request, model, Path.Template.TASK_SUCCESS);
@@ -49,7 +50,7 @@ public class TaskController {
     	LoginController.ensureUserIsLoggedIn(request, response);
     	if (clientAcceptsHtml(request)) {
     		Map<String, Object> model = new HashMap<>();
-    		TaskEntity task = new TaskEntity(getQueryTaskId(request),getQueryName(request),getQueryNote(request));
+    		TaskEntity task = new TaskEntity(getQueryTaskId(request),getQueryName(request),getQueryNote(request),getQueryDueDate(request),getQueryDone(request));
     		task.update();
     		model.put("task", task);
     		model.put("updated", true);
@@ -58,4 +59,16 @@ public class TaskController {
     	return ViewUtil.notAcceptable.handle(request, response);
     };
     
+    public static Route deleteOneTask = (Request request, Response response) -> {
+    	LoginController.ensureUserIsLoggedIn(request, response);
+    	if (clientAcceptsHtml(request)) {
+    		Map<String, Object> model = new HashMap<>();
+    		TaskEntity.byTask(getQueryParamsId(request), getSessionCurrentProjectId(request)).delete();
+    		model.put("project", ProjectEntity.byProject(getSessionCurrentProjectId(request), getSessionCurrentId(request).toString()));
+    		model.put("tasks", TaskEntity.all(Integer.parseInt(getQueryParamsId(request))));
+            
+    		return ViewUtil.render(request, model, Path.Template.PROJECT_VIEW);
+    	}
+    	return ViewUtil.notAcceptable.handle(request, response);
+    };
 }

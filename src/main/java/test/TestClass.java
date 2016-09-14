@@ -38,11 +38,14 @@ public class TestClass {
         get(Path.Web.PROJECTS,		 	ProjectController.serveProjectPage);
         get(Path.Web.NEW_PROJECT,   	ProjectController.handleNewPage);
         post(Path.Web.SUCCESS_PROJECT,	ProjectController.handleNewPost);
+        get(Path.Web.DELETE_PROJECT,	ProjectController.deleteOneProject);
+        get(Path.Web.EDIT_PROJECT,		ProjectController.editOneProject);
         get(Path.Web.ONE_PROJECT,		ProjectController.fetchOneProject);
-        post(Path.Web.PROJECTS,			ProjectController.handleProjectPost);
+        post(Path.Web.PROJECTS,			ProjectController.editProjectPost);
         get(Path.Web.NEW_TASK,   		TaskController.handleNewTask);
         post(Path.Web.SUCCESS_TASK,		TaskController.handleNewPost);
         get(Path.Web.ONE_TASK,			TaskController.fetchOneTask);
+        get(Path.Web.DELETE_TASK,		TaskController.deleteOneTask);
         post(Path.Web.TASKS,			TaskController.handleTaskPost);
         
         get("*",                     ViewUtil.notFound);

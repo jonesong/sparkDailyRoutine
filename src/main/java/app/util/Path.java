@@ -13,10 +13,13 @@ public class Path {
         @Getter public static final String PROJECTS = "/project/";
         @Getter public static final String NEW_PROJECT = "/project/new/";
         @Getter public static final String SUCCESS_PROJECT = "/project/success/";
+        @Getter public static final String EDIT_PROJECT = "/project/edit/:id/";
+        @Getter public static final String DELETE_PROJECT = "/project/del/:id/";
         @Getter public static final String ONE_PROJECT = "/project/:id/";
         @Getter public static final String TASKS = "/task/";
         @Getter public static final String NEW_TASK = "/task/new/";
         @Getter public static final String SUCCESS_TASK = "/task/success/";
+        @Getter public static final String DELETE_TASK = "/task/del/:id/";
         @Getter public static final String ONE_TASK = "/task/:id/";
         
     }
@@ -28,6 +31,7 @@ public class Path {
         public final static String PROJECT_NEW = "/project/new.vm";
         public final static String PROJECT_SUCCESS = "/project/success.vm";
         public static final String PROJECT_ONE = "/project/one.vm";
+        public static final String PROJECT_VIEW = "/project/view.vm";
         public final static String TASK_NEW = "/task/new.vm";
         public final static String TASK_SUCCESS = "/task/success.vm";
         public final static String TASK_ONE = "/task/one.vm";

@@ -3,28 +3,26 @@
 	
 	<div class="panel panel-default">
 	<div class="panel-heading">
-		<span class="lead">
 			#if ($updated)
-				$project.getName() has been updated.
-				#else
-				Edit $project.getName()'s project
+				$msg.get("PROJECT_UPDATED", $project.getName())
+			#else
+				$msg.get("PROJECT_EDIT", $project.getName())
 			#end
-		</span>
 	</div>
-		<form id="project" action="/project/" method="post">
-  		<input id="projectId" name="projectId" type="hidden" value="$project.getId()">
-		<table class="table table-hover">
+		<form action="/project/" method="post">
+  		<input name="projectId" type="hidden" value="$project.getId()">
+		<table>
 			<thead>
 				<tr>
-					<th>Project Name</th>
-					<th>Project Note</th>
+					<th>$msg.get("PROJECT_NAME")</th>
+					<th>$msg.get("PROJECT_NOTE")</th>
 				   	<th width="100"></th>
 				</tr>
 			</thead>
 		    <tbody>
 				<tr>
-					<td><input id="name" name="name" type="text" value="$project.getName()" required></td>
-					<td><input id="note" name="note" type="text" value="$project.getNote()"></td>
+					<td><input name="name" type="text" value="$project.getName()" required></td>
+					<td><input name="note" type="text" value="$project.getNote()"></td>
 					<td><input type="submit" value="$msg.get("PROJECT_UPDATE")" class="btn btn-update custom-width-submit"></td>
 				</tr>
 			</tbody>
@@ -37,8 +35,9 @@
 	<table>
 		<thead>
 			<tr>
-				<th>Task Name</th>
-				<th>Task Note</th>
+				<th>$msg.get("TASK_NAME")</th>
+				<th>$msg.get("TASK_NOTE")</th>
+			   	<th>$msg.get("TASK_DONE")</th>
 			   	<th width="100"></th>
 			    <th width="100"></th>
 				</tr>
@@ -48,16 +47,21 @@
 				<tr>
 					<td>$task.getName()</td>
 					<td>$task.getNote()</td>
+					<td>
+						#if($task.getDone() == 0) $msg.get("LABEL_YES")
+						#elseif($task.getDone() == 1) $msg.get("LABEL_NO")
+						#end
+					</td>
 					<td><a href="$WebPath.getTASKS()$task.getId()" class="btn btn-success custom-width">edit</a></td>
-					<td><a href="$WebPath.getTASKS()$task.getId()" class="btn btn-danger custom-width">delete</a></td>
+					<td><a href="$WebPath.getTASKS()del/$task.getId()" class="btn btn-danger custom-width" onclick="return confirmbox();">delete</a></td>
 				</tr>
 			#end
 		</tbody>
 	</table>
 	
 	<p></p>
-	<a href="/task/new/">Add New Task</a>
+	<a href="/task/new/">Add New $msg.get("TASK_HEADING_ALL")</a>
 	
 	<p></p>
-	<a href="/project/">Return to Projects</a>
+	<a href="/project/">Return to $msg.get("PROJECTS_HEADING_ALL")</a>
 #end

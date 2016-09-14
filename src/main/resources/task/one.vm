@@ -3,34 +3,47 @@
 
 	<div class="panel panel-default">
 	<div class="panel-heading">
-		<span class="lead">
 			#if ($updated)
-				$task.getName() has been updated.
-				#else
-				Edit $task.getName()'s project
+				$msg.get("TASK_UPDATED", $task.getName())
+			#else
+				$msg.get("TASK_EDIT", $task.getName())
 			#end
-		</span>
 	</div>
-		<form id="task" action="/task/" method="post">
-  		<input id="taskId" name="taskId" type="hidden" value="$task.getId()">
-		<table class="table table-hover">
+		<form action="/task/" method="post">
+  		<input name="taskId" type="hidden" value="$task.getId()">
+		<table>
 			<thead>
 				<tr>
-					<th>Task Name</th>
-					<th>Task Note</th>
+					<th>$msg.get("TASK_NAME")</th>
+					<th>$msg.get("DUE_DATE")</th>
+				   	<th>$msg.get("TASK_DONE")</th>
+				</tr>
+			</thead>
+		    <tbody>
+				<tr>
+					<td><input name="name" type="text" value="$task.getName()" required></td>
+					<td><input name="due_date" type="date" value="$task.getDue_date()"></td>
+					<td><input type="checkbox" name="done"
+						#if($task.getDone() == 0) checked #end
+					></td>
+				</tr>
+			</tbody>
+			<thead>
+				<tr>
+					<th colspan="2">$msg.get("TASK_NOTE")</th>
 				   	<th width="100"></th>
 				</tr>
 			</thead>
 		    <tbody>
 				<tr>
-					<td><input id="name" name="name" type="text" value="$task.getName()" required></td>
-					<td><input id="note" name="note" type="text" value="$task.getNote()"></td>
+					<td colspan="2"><input name="note" type="text" value="$task.getNote()"></td>
 					<td><input type="submit" value="$msg.get("TASK_UPDATE")" class="btn btn-update custom-width-submit"></td>
 				</tr>
 			</tbody>
+
 		</table>
 		</form>
 	</div>	
 
-	<a href="/project/$currentProjectId/">Return to Project</a>
+	<a href="/project/$currentProjectId/">$msg.get("TASK_RETURN")</a>
 #end

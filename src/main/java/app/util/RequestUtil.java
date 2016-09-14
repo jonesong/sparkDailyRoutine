@@ -20,6 +20,10 @@ public class RequestUtil {
         return request.session().attribute("currentUser");
     }
 	
+	public static String getSessionName(Request request) {
+        return request.session().attribute("name");
+    }
+	
 	public static boolean removeSessionAttrLoggedOut(Request request) {
         Object loggedOut = request.session().attribute("loggedOut");
         request.session().removeAttribute("loggedOut");
@@ -72,6 +76,14 @@ public class RequestUtil {
     
     public static String getQueryNote(Request request){
     	return request.queryParams("note");
+    }
+    
+    public static String getQueryDueDate(Request request){
+    	return request.queryParams("due_date");
+    }
+    
+    public static String getQueryDone(Request request){
+    	return request.queryParams("done");
     }
     
     public static boolean clientAcceptsHtml(Request request) {
