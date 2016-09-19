@@ -24,7 +24,7 @@ public class ProjectController {
     	return ViewUtil.notAcceptable.handle(request, response);
     };
     
-    public static Route handleNewPage = (Request request, Response response) -> {
+    public static Route handleNewPost = (Request request, Response response) -> {
     	LoginController.ensureUserIsLoggedIn(request, response);
     	if (clientAcceptsHtml(request)) {
     		Map<String, Object> model = new HashMap<>();
@@ -33,7 +33,7 @@ public class ProjectController {
     	return ViewUtil.notAcceptable.handle(request, response);
     };
     
-    public static Route handleNewPost = (Request request, Response response) -> {
+    public static Route handleNewProject = (Request request, Response response) -> {
     	LoginController.ensureUserIsLoggedIn(request, response);
     	if (clientAcceptsHtml(request)) {
     		Map<String, Object> model = new HashMap<>();

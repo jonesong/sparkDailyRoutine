@@ -52,7 +52,7 @@
 						#elseif($task.getDone() == 1) $msg.get("LABEL_NO")
 						#end
 					</td>
-					<td><a href="$WebPath.getTASKS()$task.getId()" class="btn btn-success custom-width">edit</a></td>
+					<td><a href="$WebPath.getTASKS()edit/$task.getId()" class="btn btn-success custom-width">edit</a></td>
 					<td><a href="$WebPath.getTASKS()del/$task.getId()" class="btn btn-danger custom-width" onclick="return confirmbox();">delete</a></td>
 				</tr>
 			#end

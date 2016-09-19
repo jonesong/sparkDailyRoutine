@@ -1,39 +1,35 @@
-#parse("/velocity/layout.vm")
-#@mainLayout()
-	
-	<div class="panel-heading">$msg.get("PROJECT_VIEW", $project.getName())</div>
-	<h2>$msg.get("TASK_LIST")</h2>
-	
-	<table>
-		<thead>
-			<tr>
-				<th>$msg.get("TASK_NAME")</th>
-				<th>$msg.get("TASK_NOTE")</th>
-			   	<th>$msg.get("TASK_DONE")</th>
-			   	<th width="100"></th>
-			    <th width="100"></th>
-				</tr>
-		</thead>
-		<tbody>
-			#foreach($task in $tasks)
-				<tr>
-					<td>$task.getName()</td>
-					<td>$task.getNote()</td>
-					<td>
-						#if($task.getDone() == 0) $msg.get("LABEL_YES")
-						#elseif($task.getDone() == 1) $msg.get("LABEL_NO")
-						#end
-					</td>
-					<td><a href="$WebPath.getTASKS()$task.getId()" class="btn btn-success custom-width">edit</a></td>
-					<td><a href="$WebPath.getTASKS()del/$task.getId()" class="btn btn-danger custom-width" onclick="return confirmbox();">delete</a></td>
-				</tr>
-			#end
-		</tbody>
-	</table>
-	
-	<p></p>
-	<a href="/task/new/">Add New $msg.get("TASK_HEADING_ALL")</a>
-	
-	<p></p>
-	<a href="/project/">Return to $msg.get("PROJECTS_HEADING_ALL")</a>
+#parse("/velocity/layout.vm") #@mainLayout()
+
+<div class="panel-heading">$msg.get("PROJECT_VIEW", $project.getName())</div>
+<h2>$msg.get("TASK_LIST")</h2>
+
+<table>
+	<thead>
+		<tr>
+			<th>$msg.get("TASK_NAME")</th>
+			<th>$msg.get("TASK_NOTE")</th>
+			<th>$msg.get("TASK_DONE")</th>
+			<th width="100"></th>
+			<th width="100"></th>
+		</tr>
+	</thead>
+	<tbody>
+		#foreach($task in $tasks)
+		<tr>
+			<td><a href="$WebPath.getTASKS()$task.getId()">$task.getName()</a></td>
+			<td>$task.getNote()</td>
+			<td>#if($task.getDone() == 0) $msg.get("LABEL_YES")
+				#elseif($task.getDone() == 1) $msg.get("LABEL_NO") #end</td>
+			<td><a href="$WebPath.getTASKS()edit/$task.getId()" class="btn btn-success custom-width">edit</a></td>
+			<td><a href="$WebPath.getTASKS()del/$task.getId()" class="btn btn-danger custom-width" onclick="return confirmbox();">delete</a></td>
+		</tr>
+		#end
+	</tbody>
+</table>
+
+<p></p>
+<a href="/task/new/">Add New $msg.get("TASK_HEADING_ALL")</a>
+
+<p></p>
+<a href="/project/">Return to $msg.get("PROJECTS_HEADING_ALL")</a>
 #end

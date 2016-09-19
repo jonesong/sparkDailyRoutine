@@ -1,0 +1,106 @@
+#parse("/velocity/layout.vm") #@mainLayout()
+
+<div class="panel panel-default">
+	<div class="panel-heading">$msg.get("TODO_PROGRESS", $task.getName())</div>
+	<form action="/task/$task.getId()/" method="post" onsubmit="return checkbeforeupdate()">
+  	<input name="taskId" type="hidden" value="$task.getId()">
+  	<input id="date_started" name="date_started" type="hidden" value="">
+  	<input id="time_total" name="time_total" type="hidden" value="">
+  	<input id="time_start" name="time_start" type="hidden" value="">
+  	<input id="time_end" name="time_end" type="hidden" value="">
+  	<table>
+		<thead>
+			<tr>
+				<th>$msg.get("TODO_TIME_START")</th>
+				<th>$msg.get("TODO_TIME_END")</th>
+				<th>$msg.get("TODO_TIME_TOTAL")</th>
+				<th width="100"></th>
+			</tr>
+		</thead>
+		<tbody>
+		<!-- Stop watch from http://www.htmlbestcodes.com/beautiful_stopwatch_by_html__javascript_and_css3.htm -->
+			<tr>
+				<td><div id="timer_controls"> <label for="start">Start</label></div></td>
+				<td><div id="timer_controls"> <label for="stop">Stop</label></div></td>
+				<td>
+					<div class="stopwatch">
+						<!-- time to add the controls -->
+						<input id="start" name="controls" type="radio" onclick="return getdatetime()" /> <input id="stop" name="controls" type="radio" onclick="return gettimeend()" />
+						<div class="timer">
+							<div class="cell">
+								<div id="tenhour" class="numbers tenhour moveten">0 1 2 3 4 5 6 7 8 9</div>
+							</div>
+							<div class="cell">
+								<div id="hour" class="numbers hour moveten">0 1 2 3 4 5 6 7 8 9</div>
+							</div>
+							<div class="cell divider">
+								<div class="numbers">:</div>
+							</div>
+							<div class="cell">
+								<div id="tenminute" class="numbers tenminute movesix">0 1 2 3 4 5 6</div>
+							</div>
+							<div class="cell">
+								<div id="minute" class="numbers minute moveten">0 1 2 3 4 5 6 7 8 9</div>
+							</div>
+							<div class="cell divider">
+								<div class="numbers">:</div>
+							</div>
+							<div class="cell">
+								<div id="tensecond" class="numbers tensecond movesix">0 1 2 3 4 5 6</div>
+							</div>
+							<div class="cell">
+								<div id="second" class="numbers second moveten">0 1 2 3 4 5 6 7 8 9</div>
+							</div>
+							<div class="cell divider">
+								<div class="numbers">:</div>
+							</div>
+							<div class="cell">
+								<div class="numbers milisecond moveten">0 1 2 3 4 5 6 7 8 9</div>
+							</div>
+							<div class="cell">
+								<div class="numbers tenmilisecond moveten">0 1 2 3 4 5 6 7 8 9</div>
+							</div>
+							<div class="cell">
+								<div class="numbers hundredmilisecond moveten">0 1 2 3 4 5 6 7 8 9</div>
+							</div>
+						</div>
+					</div>
+				</td>
+				<td><input type="submit" value="$msg.get("TODO_UPDATE")" class="btn btn-update custom-width-submit"></td>
+			</tr>
+		</tbody>
+		<thead>
+			<tr>
+				<th colspan="4">$msg.get("TODO_NOTE")</th>
+			</tr>
+		</thead>
+		<tbody>
+			<tr>
+				<td colspan="4"><input type="text" name="note" placeholder="$msg.get("TODO_NOTE")" value="" autofocus></td>
+			</tr>
+		</tbody>
+	</table>
+	</form>
+	<div class="panel-heading">$msg.get("TODO_HISTORY", $task.getName())</div>
+	<table>		
+		<thead>
+			<tr>
+				<th colspan="2">$msg.get("TODO_NOTE")</th>
+				<th>$msg.get("TODO_DATE_START")</th>
+				<th>$msg.get("TODO_TIME_TOTAL")</th>
+			</tr>
+		</thead>
+		<tbody>
+			#foreach($todo in $todos)
+			<tr>
+				<td colspan="2">$todo.getNote()</td>
+				<td>$todo.getDate_started()</td>
+				<td>$todo.getTime_total()</td>
+			</tr>
+			#end
+		</tbody>
+	</table>
+</div>
+
+<a href="/project/$currentProjectId/">$msg.get("TASK_RETURN")</a>
+#end

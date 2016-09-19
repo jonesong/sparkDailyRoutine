@@ -16,6 +16,10 @@ public class RequestUtil {
         return request.session().attribute("currentProjectId");
     }
 	
+	public static String getSessionCurrentTaskId(Request request) {
+        return request.session().attribute("currentTaskId");
+    }
+	
 	public static String getSessionCurrentUser(Request request) {
         return request.session().attribute("currentUser");
     }
@@ -84,6 +88,22 @@ public class RequestUtil {
     
     public static String getQueryDone(Request request){
     	return request.queryParams("done");
+    }
+    
+    public static String getQueryDateStarted(Request request){
+    	return request.queryParams("date_started");
+    }
+    
+    public static String getQueryTimeTotal(Request request){
+    	return request.queryParams("time_total");
+    }
+    
+    public static String getQueryTimeStart(Request request){
+    	return request.queryParams("time_start");
+    }
+    
+    public static String getQueryTimeEnd(Request request){
+    	return request.queryParams("time_end");
     }
     
     public static boolean clientAcceptsHtml(Request request) {

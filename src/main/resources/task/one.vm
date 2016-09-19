@@ -40,9 +40,27 @@
 					<td><input type="submit" value="$msg.get("TASK_UPDATE")" class="btn btn-update custom-width-submit"></td>
 				</tr>
 			</tbody>
-
 		</table>
 		</form>
+		<div class="panel-heading">$msg.get("TODO_HISTORY", $task.getName())</div>
+		<table>		
+			<thead>
+				<tr>
+					<th colspan="2">$msg.get("TODO_NOTE")</th>
+					<th>$msg.get("TODO_DATE_START")</th>
+					<th>$msg.get("TODO_TIME_TOTAL")</th>
+				</tr>
+			</thead>
+			<tbody>
+				#foreach($todo in $todos)
+				<tr>
+					<td colspan="2">$todo.getNote()</td>
+					<td>$todo.getDate_started()</td>
+					<td>$todo.getTime_total()</td>
+				</tr>
+				#end
+			</tbody>
+		</table>
 	</div>	
 
 	<a href="/project/$currentProjectId/">$msg.get("TASK_RETURN")</a>

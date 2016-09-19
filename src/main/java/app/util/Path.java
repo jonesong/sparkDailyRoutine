@@ -20,7 +20,9 @@ public class Path {
         @Getter public static final String NEW_TASK = "/task/new/";
         @Getter public static final String SUCCESS_TASK = "/task/success/";
         @Getter public static final String DELETE_TASK = "/task/del/:id/";
-        @Getter public static final String ONE_TASK = "/task/:id/";
+        @Getter public static final String EDIT_TASK = "/task/edit/:id/";
+        @Getter public static final String VIEW_TASK = "/task/:id/";
+        @Getter public static final String TODOS = "/todo/";
         
     }
 
@@ -35,6 +37,7 @@ public class Path {
         public final static String TASK_NEW = "/task/new.vm";
         public final static String TASK_SUCCESS = "/task/success.vm";
         public final static String TASK_ONE = "/task/one.vm";
+        public final static String TASK_VIEW = "/task/view.vm";
         
         public static final String NOT_FOUND = "/velocity/notFound.vm";
     }

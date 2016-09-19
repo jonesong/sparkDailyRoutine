@@ -6,6 +6,7 @@ import java.util.Map;
 import app.login.LoginController;
 import app.project.ProjectEntity;
 import app.task.TaskEntity;
+import app.todo.TodoEntity;
 import app.util.Path;
 import app.util.ViewUtil;
 import spark.Request;
@@ -36,11 +37,12 @@ public class TaskController {
     	return ViewUtil.notAcceptable.handle(request, response);
     };
     
-	public static Route fetchOneTask = (Request request, Response response) -> {
+	public static Route editOneTask = (Request request, Response response) -> {
     	LoginController.ensureUserIsLoggedIn(request, response);
     	if (clientAcceptsHtml(request)) {
     		Map<String, Object> model = new HashMap<>();
     		model.put("task", TaskEntity.byTask(getQueryParamsId(request), getSessionCurrentProjectId(request)));
+    		model.put("todos", TodoEntity.all(Integer.parseInt(getQueryParamsId(request))));
             return ViewUtil.render(request, model, Path.Template.TASK_ONE);
     	}
     	return ViewUtil.notAcceptable.handle(request, response);
@@ -54,6 +56,7 @@ public class TaskController {
     		task.update();
     		model.put("task", task);
     		model.put("updated", true);
+    		model.put("todos", TodoEntity.all(Integer.parseInt(getQueryParamsId(request))));
             return ViewUtil.render(request, model, Path.Template.TASK_ONE);
     	}
     	return ViewUtil.notAcceptable.handle(request, response);
