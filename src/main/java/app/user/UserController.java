@@ -1,6 +1,7 @@
 package app.user;
 
 import java.util.List;
+//import static main.App.user;
 import static test.TestClass.user;
 
 public class UserController {
@@ -16,6 +17,5 @@ public class UserController {
         }
         return true;
     }
-
 
 }

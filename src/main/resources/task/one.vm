@@ -1,6 +1,8 @@
 #parse("/velocity/layout.vm")
 #@mainLayout()
 
+<script src="/duedate.js"></script>
+
 	<div class="panel panel-default">
 	<div class="panel-heading">
 			#if ($updated)
@@ -9,7 +11,7 @@
 				$msg.get("TASK_EDIT", $task.getName())
 			#end
 	</div>
-		<form action="/task/" method="post">
+		<form action="/task/" method="post" onsubmit="return checkFormatDueDate()">
   		<input name="taskId" type="hidden" value="$task.getId()">
 		<table>
 			<thead>
@@ -22,7 +24,7 @@
 		    <tbody>
 				<tr>
 					<td><input name="name" type="text" value="$task.getName()" required></td>
-					<td><input name="due_date" type="date" value="$task.getDue_date()"></td>
+					<td><input id="due_date" name="due_date" type="date" value="$task.getDue_date()" placeholder="2016-09-16" type="number"></td>
 					<td><input type="checkbox" name="done"
 						#if($task.getDone() == 0) checked #end
 					></td>

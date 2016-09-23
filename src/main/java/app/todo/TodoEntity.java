@@ -27,18 +27,9 @@ public class TodoEntity {
 		this.time_end = timeEnd;
 	}
 	
-	public TodoEntity(String id, String note, String dateStarted, String timeTotal, String timeStart, String timeEnd){
-		this.id = Integer.parseInt(id);
-		this.note = note;
-		this.date_started = dateStarted;
-		this.time_total = timeTotal;
-		this.time_start = timeStart;
-		this.time_end = timeEnd;
-	}
-	
 	public static List<TodoEntity> all(int task_id) {
 		String sql = "SELECT id, task_id, note, date_started,"
-				+ " time_total, time_start, time_end FROM todos where deleted='1' and task_id=:task_id order by date_started, time_start";
+				+ " time_total, time_start, time_end FROM todos where deleted='1' and task_id=:task_id order by date_started, time_total";
 		try (Connection con = DB.sql2o.open()) {
 			return con.createQuery(sql).addParameter("task_id", task_id).executeAndFetch(TodoEntity.class);
 		}

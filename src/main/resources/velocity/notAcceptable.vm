@@ -1,0 +1,4 @@
+#parse("/velocity/layout.vm")
+#@mainLayout()
+    <h1>$msg.get("ERROR_406_NOT_ACCEPTABLE")</h1>
+#end

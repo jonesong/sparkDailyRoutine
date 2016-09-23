@@ -18,17 +18,10 @@ h1, h2, h3, h4 {
 	color: #444;
 }
 
-h2 {
+h2, label {
 	padding-left: 5px;
 }
 
-label {
-	padding-left: 5px;
-}
-
-small {
-	color: #555;
-}
 
 header {
 	background: #274555;
@@ -256,6 +249,11 @@ table>thead>tr>th {
 	border-bottom: 2px solid #ddd;
 	text-align: left;
 	color: #babdb6;
+}
+
+#custom-thead th{
+	font-size: x-small;
+	line-height: 5px;
 }
 
 .panel-heading {

@@ -40,6 +40,7 @@ public class Path {
         public final static String TASK_VIEW = "/task/view.vm";
         
         public static final String NOT_FOUND = "/velocity/notFound.vm";
+        public static final String NOT_ACCEPTABLE = "/velocity/notAcceptable.vm";
     }
 
 }

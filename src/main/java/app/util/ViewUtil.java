@@ -22,7 +22,7 @@ public class ViewUtil {
 
     public static Route notAcceptable = (Request request, Response response) -> {
         response.status(HttpStatus.NOT_ACCEPTABLE_406);
-        return new MessageBundle(getSessionLocale(request)).get("ERROR_406_NOT_ACCEPTABLE");
+        return render(request, new HashMap<>(), Path.Template.NOT_ACCEPTABLE);
     };
 
     public static Route notFound = (Request request, Response response) -> {

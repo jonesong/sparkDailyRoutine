@@ -60,6 +60,13 @@ public class TaskEntity {
 		}
 	}
 	
+	public static String getProjectIdbyTaskId(String id) {
+		String sql = "SELECT project_id FROM tasks where deleted='1' and id=:id";
+		try (Connection con = DB.sql2o.open()) {
+			return con.createQuery(sql).addParameter("id", id).executeAndFetchFirst(String.class);
+		}
+	}
+	
 	public void save() {
 		String sql = "INSERT INTO tasks(project_id, name, note, due_date) "
 				+ "VALUES (:project_id, :name, :note, :due_date)";

@@ -45,7 +45,7 @@
 		<tbody>
 			#foreach($task in $tasks)
 				<tr>
-					<td>$task.getName()</td>
+					<td><a href="$WebPath.getTASKS()$task.getId()">$task.getName()</a></td>
 					<td>$task.getNote()</td>
 					<td>
 						#if($task.getDone() == 0) $msg.get("LABEL_YES")

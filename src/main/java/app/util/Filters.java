@@ -1,7 +1,6 @@
 package app.util;
 
 import spark.*;
-import static app.util.RequestUtil.*;
 
 public class Filters {
 
@@ -9,6 +8,7 @@ public class Filters {
     // a trailing slash, redirect the user to the correct path
     public static Filter addTrailingSlashes = (Request request, Response response) -> {
         if (!request.pathInfo().endsWith("/")) {
+//            response.redirect(request.pathInfo() + "/");
             response.redirect(request.pathInfo() + "/");
         }
     };

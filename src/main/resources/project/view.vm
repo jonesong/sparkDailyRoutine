@@ -22,9 +22,16 @@
 				#elseif($task.getDone() == 1) $msg.get("LABEL_NO") #end</td>
 			<td><a href="$WebPath.getTASKS()edit/$task.getId()" class="btn btn-success custom-width">edit</a></td>
 			<td><a href="$WebPath.getTASKS()del/$task.getId()" class="btn btn-danger custom-width" onclick="return confirmbox();">delete</a></td>
+		</tr>		
+		<!-- <thead id="custom-thead">
+		<tr>
+			<th>&nbsp;&nbsp;$msg.get("TODO_TIME_TOTAL")</th>
+			<th colspan="4">blank</th>
 		</tr>
+		</thead> -->	
 		#end
 	</tbody>
+	
 </table>
 
 <p></p>

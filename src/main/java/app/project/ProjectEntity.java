@@ -49,6 +49,13 @@ public class ProjectEntity {
 		}
 	}
 	
+	public static Integer getUserIdbyProjectId(String id) {
+		String sql = "SELECT user_id FROM projects where deleted='1' and id=:id";
+		try (Connection con = DB.sql2o.open()) {
+			return con.createQuery(sql).addParameter("id", id).executeAndFetchFirst(Integer.class);
+		}
+	}
+	
 	public void save() {
 		String sql = "INSERT INTO projects(user_id, name, note) "
 				+ "VALUES (:user_id, :name, :note)";

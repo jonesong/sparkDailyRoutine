@@ -1,0 +1,72 @@
+#parse("/velocity/layout.vm") #@mainLayout()
+
+<div class="panel panel-default">
+	<table>
+		<thead>
+			<tr>
+				<th>$msg.get("TASK_TIME_START")</th>
+				<th>$msg.get("TASK_TIME_END")</th>
+				<th colspan="3">$msg.get("TASK_TIME_TOTAL")</th>
+			</tr>
+		</thead>
+		<tbody>
+			<tr>
+				<td><div id="timer_controls">
+						<label for="start">Start</label>
+					</div></td>
+				<td><div id="timer_controls">
+						<label for="stop">Stop</label>
+					</div></td>
+				<td colspan="3">
+					<div class="stopwatch">
+						<!-- time to add the controls -->
+						<input id="start" name="controls" type="radio" /> <input
+							id="stop" name="controls" type="radio" />
+						<div class="timer">
+							<div class="cell">
+								<div class="numbers tenhour moveten">0 1 2 3 4 5 6 7 8 9</div>
+							</div>
+							<div class="cell">
+								<div class="numbers hour moveten">0 1 2 3 4 5 6 7 8 9</div>
+							</div>
+							<div class="cell divider">
+								<div class="numbers">:</div>
+							</div>
+							<div class="cell">
+								<div class="numbers tenminute movesix">0 1 2 3 4 5 6</div>
+							</div>
+							<div class="cell">
+								<div class="numbers minute moveten">0 1 2 3 4 5 6 7 8 9</div>
+							</div>
+							<div class="cell divider">
+								<div class="numbers">:</div>
+							</div>
+							<div class="cell">
+								<div class="numbers tensecond movesix">0 1 2 3 4 5 6</div>
+							</div>
+							<div class="cell">
+								<div class="numbers second moveten">0 1 2 3 4 5 6 7 8 9</div>
+							</div>
+							<div class="cell divider">
+								<div class="numbers">:</div>
+							</div>
+							<div class="cell">
+								<div class="numbers milisecond moveten">0 1 2 3 4 5 6 7 8
+									9</div>
+							</div>
+							<div class="cell">
+								<div class="numbers tenmilisecond moveten">0 1 2 3 4 5 6 7
+									8 9</div>
+							</div>
+							<div class="cell">
+								<div class="numbers hundredmilisecond moveten">0 1 2 3 4 5
+									6 7 8 9</div>
+							</div>
+						</div>
+					</div>
+				</td>
+			</tr>
+		</tbody>
+	</table>
+</div>
+#end
