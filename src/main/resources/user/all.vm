@@ -1,0 +1,34 @@
+#parse("/velocity/layout.vm")
+#@mainLayout()
+
+<script src="/dialogbox.js"></script>
+
+<div class="panel panel-default">
+	<div class="panel-heading">$msg.get("LABEL_LISTOF") $msg.get("USERS_HEADING_ALL")</div>
+		<table>
+			<thead>
+				<tr>
+					<th>$msg.get("USER_NAME")</th>
+					<th>$msg.get("USER_FIRSTNAME")</th>
+				   	<th>$msg.get("USER_LASTNAME")</th>
+				   	<th width="100"></th>
+				    <th width="100"></th>
+				</tr>
+			</thead>
+		    <tbody>
+			#foreach($user in $users)
+				<tr>
+					<td>$user.getUsername()</td>
+					<td>$user.getFirst_name()</td>
+					<td>$user.getLast_name()</td>
+					<td><a href="$WebPath.getUSERS()edit/$user.getId()" class="btn btn-success custom-width">$msg.get("LABEL_EDIT")</a></td>
+					<td><a href="$WebPath.getUSERS()del/$user.getId()" class="btn btn-danger custom-width" onclick="return confirmbox();">$msg.get("LABEL_DELETE")</a></td>
+				</tr>
+			#end
+		    </tbody>
+		</table>
+</div>
+<p></p>
+<a href="$WebPath.getNEW_USER()">$msg.get("LABEL_ADDNEW") $msg.get("USERS_HEADING_ALL")</a>
+
+#end

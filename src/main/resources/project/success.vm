@@ -3,6 +3,6 @@
 
 <h1>$msg.get("LABEL_SUCCESS")</h1>
 <p>$msg.get("PROJECT_SAVED", $project.getName())</p>
-<a href="/project/">Return to $msg.get("PROJECTS_HEADING_ALL")</a>
+<a href="$WebPath.getPROJECTS()">$msg.get("LABEL_RETURNTO") $msg.get("PROJECTS_HEADING_ALL")</a>
 
 #end

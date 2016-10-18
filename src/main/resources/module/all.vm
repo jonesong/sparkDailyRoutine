@@ -1,0 +1,28 @@
+#parse("/velocity/layout.vm")
+#@mainLayout()
+
+<script src="/dialogbox.js"></script>
+
+<div class="panel panel-default">
+	<div class="panel-heading">$currentUser's $msg.get("MODULES_HEADING_ALL")</div>
+		<table>
+			<thead>
+				<tr>
+					<th>$msg.get("MODULE_NAME")</th>
+					<th width="100"></th>
+				</tr>
+			</thead>
+		    <tbody>
+			#foreach($module in $modules)
+				<tr>
+					<td>$module.getName()</td>
+					<td><a href="$WebPath.getMODULES()del/$module.getId()" class="btn btn-danger custom-width" onclick="return confirmbox();">$msg.get("LABEL_DELETE")</a></td>
+				</tr>
+			#end
+		    </tbody>
+		</table>
+</div>
+<p></p>
+<a href="$WebPath.getNEW_MODULE()">$msg.get("LABEL_ADDNEW") $msg.get("MODULES_HEADING_ALL")</a>
+
+#end

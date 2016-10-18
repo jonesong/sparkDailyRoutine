@@ -38,7 +38,7 @@ function checkFormatDueDate() {
 
 function checkMonth(x){
 	var num = parseInt(x);
-	if (num > 0 && num < 12) {
+	if (num > 0 && num < 13) {
 		return true;
 	}
 	return false;
@@ -46,7 +46,7 @@ function checkMonth(x){
 
 function checkDay(x) {
 	var num = parseInt(x);
-	if (num > 0 && num < 31) {
+	if (num > 0 && num < 32) {
 		return true;
 	}
 	return false;

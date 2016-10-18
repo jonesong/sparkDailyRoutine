@@ -1,5 +1,7 @@
 #parse("/velocity/layout.vm") #@mainLayout()
 
+<script src="/dialogbox.js"></script>
+
 <div class="panel-heading">$msg.get("PROJECT_VIEW", $project.getName())</div>
 <h2>$msg.get("TASK_LIST")</h2>
 
@@ -20,13 +22,13 @@
 			<td>$task.getNote()</td>
 			<td>#if($task.getDone() == 0) $msg.get("LABEL_YES")
 				#elseif($task.getDone() == 1) $msg.get("LABEL_NO") #end</td>
-			<td><a href="$WebPath.getTASKS()edit/$task.getId()" class="btn btn-success custom-width">edit</a></td>
-			<td><a href="$WebPath.getTASKS()del/$task.getId()" class="btn btn-danger custom-width" onclick="return confirmbox();">delete</a></td>
+			<td><a href="$WebPath.getTASKS()edit/$task.getId()" class="btn btn-success custom-width">$msg.get("LABEL_EDIT")</a></td>
+			<td><a href="$WebPath.getTASKS()del/$task.getId()" class="btn btn-danger custom-width" onclick="return confirmbox();">$msg.get("LABEL_DELETE")</a></td>
 		</tr>		
 		<!-- <thead id="custom-thead">
 		<tr>
 			<th>&nbsp;&nbsp;$msg.get("TODO_TIME_TOTAL")</th>
-			<th colspan="4">blank</th>
+			<th colspan="4">Testing</th>
 		</tr>
 		</thead> -->	
 		#end
@@ -35,8 +37,8 @@
 </table>
 
 <p></p>
-<a href="/task/new/">Add New $msg.get("TASK_HEADING_ALL")</a>
+<a href="$WebPath.getNEW_TASK()">$msg.get("LABEL_ADDNEW") $msg.get("TASK_HEADING_ALL")</a>
 
 <p></p>
-<a href="/project/">Return to $msg.get("PROJECTS_HEADING_ALL")</a>
+<a href="$WebPath.getPROJECTS()">$msg.get("LABEL_RETURNTO") $msg.get("PROJECTS_HEADING_ALL")</a>
 #end

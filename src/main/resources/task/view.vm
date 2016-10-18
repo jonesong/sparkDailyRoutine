@@ -4,7 +4,7 @@
 
 <div class="panel panel-default">
 	<div class="panel-heading">$msg.get("TODO_PROGRESS", $task.getName())</div>
-	<form action="/task/$task.getId()/" method="post" onsubmit="return checkbeforeupdate()">
+	<form action="$WebPath.getTASKS()$task.getId()/" method="post" onsubmit="return checkbeforeupdate()">
   	<input name="taskId" type="hidden" value="$task.getId()">
   	<input id="date_started" name="date_started" type="hidden" value="">
   	<input id="time_total" name="time_total" type="hidden" value="">
@@ -22,8 +22,8 @@
 		<tbody>
 		<!-- Stop watch from http://www.htmlbestcodes.com/beautiful_stopwatch_by_html__javascript_and_css3.htm -->
 			<tr>
-				<td><div id="timer_controls"> <label for="start">Start</label></div></td>
-				<td><div id="timer_controls"> <label for="stop">Stop</label></div></td>
+				<td><div id="timer_controls"> <label for="start">$msg.get("LABEL_START")</label></div></td>
+				<td><div id="timer_controls"> <label for="stop">$msg.get("LABEL_STOP")</label></div></td>
 				<td>
 					<div class="stopwatch">
 						<!-- time to add the controls -->
@@ -83,7 +83,11 @@
 		</tbody>
 	</table>
 	</form>
-	<div class="panel-heading">$msg.get("TODO_HISTORY", $task.getName())</div>
+	#set ($title = $task.getNote())
+	#if($title == "")
+		#set ($title = $task.getName())
+	#end
+	<div class="panel-heading">$msg.get("TODO_HISTORY", $title)</div>
 	<table>		
 		<thead>
 			<tr>
@@ -104,5 +108,5 @@
 	</table>
 </div>
 
-<a href="/project/$currentProjectId/">$msg.get("TASK_RETURN")</a>
+<a href="$WebPath.getPROJECTS()$currentProjectId">$msg.get("TASK_RETURN")</a>
 #end

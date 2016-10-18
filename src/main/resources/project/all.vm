@@ -1,6 +1,8 @@
 #parse("/velocity/layout.vm")
 #@mainLayout()
 
+<script src="/dialogbox.js"></script>
+
 <div class="panel panel-default">
 	<div class="panel-heading">$currentUser's $msg.get("PROJECTS_HEADING_ALL")</div>
 		<table>
@@ -17,14 +19,14 @@
 				<tr>
 					<td><a href="$WebPath.getPROJECTS()$project.getId()">$project.getName()</a></td>
 					<td>$project.getNote()</td>
-					<td><a href="$WebPath.getPROJECTS()edit/$project.getId()" class="btn btn-success custom-width">edit</a></td>
-					<td><a href="$WebPath.getPROJECTS()del/$project.getId()" class="btn btn-danger custom-width" onclick="return confirmbox();">delete</a></td>
+					<td><a href="$WebPath.getPROJECTS()edit/$project.getId()" class="btn btn-success custom-width">$msg.get("LABEL_EDIT")</a></td>
+					<td><a href="$WebPath.getPROJECTS()del/$project.getId()" class="btn btn-danger custom-width" onclick="return confirmbox();">$msg.get("LABEL_DELETE")</a></td>
 				</tr>
 			#end
 		    </tbody>
 		</table>
 </div>
 <p></p>
-<a href="/project/new/">Add New $msg.get("PROJECTS_HEADING_ALL")</a>
+<a href="$WebPath.getNEW_PROJECT()">$msg.get("LABEL_ADDNEW") $msg.get("PROJECTS_HEADING_ALL")</a>
 
 #end

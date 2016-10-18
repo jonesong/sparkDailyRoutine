@@ -2,84 +2,71 @@ package app.project;
 
 import java.util.List;
 
-import org.sql2o.Connection;
-import app.common.DB;
-import lombok.Data;
+import app.common.AbstractEntity;
+import lombok.EqualsAndHashCode;
+import lombok.Value;
 
-@Data // All fields are private and final. Getters and setters are generated (https://projectlombok.org/features/Value.html)
-public class ProjectEntity {
+@EqualsAndHashCode(callSuper=false)
+@Value //All fields are private and final. (https://projectlombok.org/features/Value.html)
+public class ProjectEntity extends AbstractEntity{
 
-	private int id;
-	private int user_id;
-	private String name;
-	private String note;
-	private char deleted ='1';
-	
-	public ProjectEntity(int userId, String name, String note){
-		this.user_id = userId;
-		this.name = name;
-		this.note = note;
-	}
-	
-	public ProjectEntity(String id, String name, String note){
-		this.id = Integer.parseInt(id);
-		this.name = name;
-		this.note = note;
-	}
+	int id;
+	int user_id;
+	String name;
+	String note;
+	String deleted = "1";
 	
 	/**
 	 * 
 	 * @param user_id
 	 * @return list by user id
+	 * @throws Exception 
 	 */
-	public static List<ProjectEntity> all(int user_id) {
-		String sql = "SELECT id, user_id, name, note FROM projects where deleted='1' and user_id=:user_id ORDER BY name ASC";
-		try (Connection con = DB.sql2o.open()) {
-			return con.createQuery(sql).addParameter("user_id", user_id).executeAndFetch(ProjectEntity.class);
-		}
+	public static List<ProjectEntity> all(int user_id) throws Exception {
+		String sql = "SELECT * FROM projects where deleted = 1 and user_id = :str1 ORDER BY name ASC";
+		String[] values = { String.valueOf(user_id) };
+		return queryListMultiParameter(sql, ProjectEntity.class, values);
 	}
 	
-	public static ProjectEntity byProject(String id, String user_id) {
-		String sql = "SELECT id, user_id, name, note FROM projects where deleted='1' "
-				+ "and id=:id and user_id=:user_id ORDER BY name ASC";
-		try (Connection con = DB.sql2o.open()) {
-			ProjectEntity project = con.createQuery(sql).addParameter("id", id).addParameter("user_id", user_id).executeAndFetchFirst(ProjectEntity.class);
-//			System.out.println(id + user_id);
-			return project;
-		}
+	public static ProjectEntity byProject(String id, String user_id) throws Exception {
+		String sql = "SELECT * FROM projects where deleted = 1 "
+				+ "and id = :str1 and user_id = :str2 ORDER BY name ASC";
+		String[] values = { id, user_id };
+		return (ProjectEntity) queryClassMultiParameter(sql, ProjectEntity.class, values);
 	}
 	
-	public static Integer getUserIdbyProjectId(String id) {
-		String sql = "SELECT user_id FROM projects where deleted='1' and id=:id";
-		try (Connection con = DB.sql2o.open()) {
-			return con.createQuery(sql).addParameter("id", id).executeAndFetchFirst(Integer.class);
-		}
+	/**
+	 * 
+	 * @param id
+	 * @return userId in the table used in ProjectController for securing pages of project only by specific user
+	 * @throws Exception 
+	 */
+	public static Integer getUserIdbyProjectId(String id) throws Exception {
+		String sql = "SELECT user_id FROM projects where id = :str1"; //remove deleted = 1 bec refractoring ProjectController, function delete first before check ensureUserProject method
+		String[] values = { id };
+		return queryIntegerMultiParameter(sql, values);
 	}
 	
 	public void save() {
 		String sql = "INSERT INTO projects(user_id, name, note) "
 				+ "VALUES (:user_id, :name, :note)";
-		try (Connection con = DB.sql2o.open()) {
-			ProjectEntity project = new ProjectEntity(getUser_id(),getName(),getNote());
-			con.createQuery(sql).bind(project).executeUpdate();
-			project = null;
-		}
+		recordUpdate(sql, getInstanceUpdate());
 	}
 	
 	public void update() {
 		String sql = "UPDATE projects SET name = :name, note =:note WHERE id = :id";
-		try (Connection con = DB.sql2o.open()) {
-			con.createQuery(sql).addParameter("name", this.name).addParameter("note", this.note).addParameter("id", this.id).executeUpdate();
-//			System.out.println(id + name + note);
-		}
+		recordUpdate(sql, getInstanceUpdate());
 	}
 	
 	//change the deleted flag into 0
 	public void delete() {
 		String sql = "UPDATE projects SET deleted = 0 WHERE id = :id";
-		try (Connection con = DB.sql2o.open()) {
-			con.createQuery(sql).addParameter("id", this.id).executeUpdate();
-		}
+		recordUpdate(sql, getInstanceUpdate());
+	}
+	
+	private ProjectEntity getInstanceUpdate(){
+		ProjectEntity project = new ProjectEntity(getId(), getUser_id(), getName(), getNote());
+		return project;
 	}
 	
 }

@@ -1,5 +1,8 @@
 #parse("/velocity/layout.vm")
 #@mainLayout()
+
+<script src="/dialogbox.js"></script>
+<script src="/checklimit.js"></script>
 	
 	<div class="panel panel-default">
 	<div class="panel-heading">
@@ -9,7 +12,7 @@
 				$msg.get("PROJECT_EDIT", $project.getName())
 			#end
 	</div>
-		<form action="/project/" method="post">
+		<form action="$WebPath.getPROJECTS()" method="post" onsubmit="return checkLimitNameNote()">
   		<input name="projectId" type="hidden" value="$project.getId()">
 		<table>
 			<thead>
@@ -21,8 +24,8 @@
 			</thead>
 		    <tbody>
 				<tr>
-					<td><input name="name" type="text" value="$project.getName()" required></td>
-					<td><input name="note" type="text" value="$project.getNote()"></td>
+					<td><input name="name" id="name" type="text" value="$project.getName()" required></td>
+					<td><input name="note" id="note" type="text" value="$project.getNote()"></td>
 					<td><input type="submit" value="$msg.get("PROJECT_UPDATE")" class="btn btn-update custom-width-submit"></td>
 				</tr>
 			</tbody>
@@ -52,16 +55,16 @@
 						#elseif($task.getDone() == 1) $msg.get("LABEL_NO")
 						#end
 					</td>
-					<td><a href="$WebPath.getTASKS()edit/$task.getId()" class="btn btn-success custom-width">edit</a></td>
-					<td><a href="$WebPath.getTASKS()del/$task.getId()" class="btn btn-danger custom-width" onclick="return confirmbox();">delete</a></td>
+					<td><a href="$WebPath.getTASKS()edit/$task.getId()" class="btn btn-success custom-width">$msg.get("LABEL_EDIT")</a></td>
+					<td><a href="$WebPath.getTASKS()del/$task.getId()" class="btn btn-danger custom-width" onclick="return confirmbox();">$msg.get("LABEL_DELETE")</a></td>
 				</tr>
 			#end
 		</tbody>
 	</table>
 	
 	<p></p>
-	<a href="/task/new/">Add New $msg.get("TASK_HEADING_ALL")</a>
+	<a href="$WebPath.getNEW_TASK()">$msg.get("LABEL_ADDNEW") $msg.get("TASK_HEADING_ALL")</a>
 	
 	<p></p>
-	<a href="/project/">Return to $msg.get("PROJECTS_HEADING_ALL")</a>
+	<a href="$WebPath.getPROJECTS()">$msg.get("LABEL_RETURNTO") $msg.get("PROJECTS_HEADING_ALL")</a>
 #end

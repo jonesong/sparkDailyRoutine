@@ -1,0 +1,8 @@
+#parse("/velocity/layout.vm")
+#@mainLayout()
+
+<h1>$msg.get("LABEL_SUCCESS")</h1>
+<p>$msg.get("USER_SAVED", $user.getUsername())</p>
+<a href="$WebPath.getUSERS()">$msg.get("LABEL_RETURNTO") $msg.get("USERS_HEADING_ALL")</a>
+
+#end

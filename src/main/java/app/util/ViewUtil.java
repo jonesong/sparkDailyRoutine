@@ -2,22 +2,23 @@ package app.util;
 
 import org.apache.velocity.app.*;
 import org.eclipse.jetty.http.*;
+
 import spark.*;
 import spark.template.velocity.*;
 import java.util.*;
 import static app.util.RequestUtil.*;
 
 public class ViewUtil {
-
+	
     // Renders a template given a model and a request
     // The request is needed to check the user session for language settings
     // and to see if the user is logged in
-    public static String render(Request request, Map<String, Object> model, String templatePath) {
+    public static String render(Request request, Map<String, Object> model, String templatePath) throws Exception {
         model.put("msg", new MessageBundle(getSessionLocale(request)));
         model.put("currentUser", getSessionCurrentUser(request));
-        model.put("currentProjectId", getSessionCurrentProjectId(request));
         model.put("WebPath", Path.Web.class); // Access application URLs from templates
-        return strictVelocityEngine().render(new ModelAndView(model, templatePath));
+        model.put("userPages", getSessionUserPages(request));
+		return strictVelocityEngine().render(new ModelAndView(model, templatePath));
     }
 
     public static Route notAcceptable = (Request request, Response response) -> {
@@ -37,4 +38,5 @@ public class ViewUtil {
         configuredEngine.setProperty("class.resource.loader.class", "org.apache.velocity.runtime.resource.loader.ClasspathResourceLoader");
         return new VelocityTemplateEngine(configuredEngine);
     }
+    
 }

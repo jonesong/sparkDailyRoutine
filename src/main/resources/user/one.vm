@@ -1,0 +1,62 @@
+#parse("/velocity/layout.vm")
+#@mainLayout()
+
+<script src="/dialogbox.js"></script>
+	
+	<div class="panel panel-default">
+	<div class="panel-heading">
+			#if ($updated)
+				$msg.get("USER_UPDATED", $user.getUsername())
+			#else
+				$msg.get("USER_EDIT", $user.getUsername())
+			#end
+	</div>
+		<form action="$WebPath.getUSERS()" method="post">
+  		<input name="username" type="hidden" value="$user.getUsername()">
+  		<input name="id" type="hidden" value="$user.getId()">
+		<table>
+			<thead>
+				<tr>
+					<th>$msg.get("USER_PASS")</th>
+					<th>$msg.get("USER_FIRSTNAME")</th>
+				   	<th>$msg.get("USER_LASTNAME")</th>
+				   	<th width="100"></th>
+				</tr>
+			</thead>
+		    <tbody>
+				<tr>
+					<td><input name="password" type="text" value="$user.getPassword()" required></td>
+					<td><input name="first_name" type="text" value="$user.getFirst_name()" required></td>
+					<td><input name="last_name" type="text" value="$user.getLast_name()" required></td>
+					<td><input type="submit" value="$msg.get("USER_UPDATE")" class="btn btn-update custom-width-submit"></td>
+				</tr>
+			</tbody>
+		</table>
+		</form>
+	</div>
+	
+	<h2>$msg.get("MODULE_NEW")</h2>
+	
+	<table>
+		<thead>
+				<tr>
+					<th>$msg.get("MODULE_NAME")</th>
+					<th width="100"></th>
+				</tr>
+		</thead>
+		<tbody>
+			#foreach($module in $modules)
+				<tr>
+					<td>$module.getName()</td>
+					<td><a href="$WebPath.getMODULES()del/$module.getId()" class="btn btn-danger custom-width" onclick="return confirmbox();">$msg.get("LABEL_DELETE")</a></td>
+				</tr>
+			#end
+		</tbody>
+	</table>
+	
+	<p></p>
+	<a href="$WebPath.getNEW_MODULE()">$msg.get("LABEL_ADDNEW") $msg.get("MODULES_HEADING_ALL")</a>
+	
+	<p></p>
+	<a href="$WebPath.getUSERS()">$msg.get("LABEL_RETURNTO") $msg.get("USERS_HEADING_ALL")</a>
+#end

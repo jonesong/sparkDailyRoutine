@@ -1,12 +1,13 @@
 package app.login;
 
+import app.module.ModuleEntity;
 import app.user.*;
 import app.util.*;
 import spark.*;
 import java.util.*;
 import static app.util.RequestUtil.*;
 //import static main.App.user;
-import static test.TestClass.user;
+//import static test.TestClass.user;
 
 public class LoginController {
 
@@ -25,7 +26,8 @@ public class LoginController {
 		}
 		model.put("authenticationSucceeded", true);
 		request.session().attribute("currentUser", getQueryUsername(request));
-		request.session().attribute("currentId", user.findId(getQueryUsername(request)).getId());
+		request.session().attribute("currentId", UserEntity.find(getQueryUsername(request)).getId());
+		request.session().attribute("userPages", ModuleEntity.userPage(getSessionCurrentId(request)));
 		if (getQueryLoginRedirect(request) != null) {
 			response.redirect(getQueryLoginRedirect(request));
 		}
@@ -34,6 +36,9 @@ public class LoginController {
 
 	public static Route handleLogoutPost = (Request request, Response response) -> {
 		request.session().removeAttribute("currentUser");
+		request.session().removeAttribute("id");
+		request.session().removeAttribute("currentProjectId");
+		request.session().removeAttribute("currentTaskId");
 		request.session().attribute("loggedOut", true);
 		response.redirect(Path.Web.LOGIN);
 		return null;

@@ -5,15 +5,15 @@
 
 <div class="panel panel-default">
 	<div class="panel-heading">$msg.get("TASK_NEW")</div>
-		<form action="/task/success/" method="post" onsubmit="return checkFormatDueDate()">
-			<input type="text" name="name" placeholder="$msg.get("TASK_NAME")" value="" required autofocus>
-			<input type="text" name="note" placeholder="$msg.get("TASK_NOTE")">
+		<form action="$WebPath.getSUCCESS_TASK()" method="post" onsubmit="return checkFormatDueDate()">
+			<input type="text" name="name" id="name" placeholder="$msg.get("TASK_NAME")" value="" required autofocus>
+			<input type="text" name="note" id="note" placeholder="$msg.get("TASK_NOTE")">
 			<label>$msg.get("DUE_DATE")</label> 
 			<input name="due_date" type="date" placeholder="2016-09-16"/>
 			<input type="submit" value="$msg.get("TASK_NEW")" class="btn btn-update custom-width-submit">
 		</form>	
 </div>
 
-<a href="/project/$currentProjectId/">$msg.get("TASK_RETURN")</a>
+<a href="$WebPath.getPROJECTS()$currentProjectId/">$msg.get("TASK_RETURN")</a>
 
 #end

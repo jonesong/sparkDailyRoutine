@@ -19,26 +19,28 @@ public class TodoController {
 
 	public static Route handleTodoPost = (Request request, Response response) -> {
 		LoginController.ensureUserIsLoggedIn(request, response);
-		Map<String, Object> model = new HashMap<>();
-		TodoEntity todo = new TodoEntity(Integer.parseInt(getSessionCurrentTaskId(request)), getQueryNote(request),
+		TodoEntity todo = new TodoEntity(0, Integer.parseInt(getSessionCurrentTaskId(request)), getQueryNote(request),
 				getQueryDateStarted(request), getQueryTimeTotal(request), getQueryTimeStart(request),
 				getQueryTimeEnd(request));
 		todo.save();
-		model.put("task", TaskEntity.byTask(getQueryParamsId(request), getSessionCurrentProjectId(request)));
-		model.put("todos", TodoEntity.all(Integer.parseInt(getSessionCurrentTaskId(request))));
-		return ViewUtil.render(request, model, Path.Template.TASK_VIEW);
+		return ViewUtil.render(request, runCommonModels(request), Path.Template.TASK_VIEW);
 	};
 
 	public static Route fetchOneTodo = (Request request, Response response) -> {
 		LoginController.ensureUserIsLoggedIn(request, response);
 		if (TaskController.ensureProjectTask(request, response)) {
-			Map<String, Object> model = new HashMap<>();
 			request.session().attribute("currentTaskId", getQueryParamsId(request));
-			model.put("task", TaskEntity.byTask(getQueryParamsId(request), getSessionCurrentProjectId(request)));
-			model.put("todos", TodoEntity.all(Integer.parseInt(getSessionCurrentTaskId(request))));
-			return ViewUtil.render(request, model, Path.Template.TASK_VIEW);
+			return ViewUtil.render(request, runCommonModels(request), Path.Template.TASK_VIEW);
 		}
 		return ViewUtil.notAcceptable.handle(request, response);
 	};
+	
+	private static Map<String, Object> runCommonModels(Request request) throws Exception {
+		Map<String, Object> model = new HashMap<>();
+		model.put("task", TaskEntity.byTask(getQueryParamsId(request), getSessionCurrentProjectId(request)));
+		model.put("todos", TodoEntity.all(Integer.parseInt(getSessionCurrentTaskId(request))));
+		model.put("currentProjectId", getSessionCurrentProjectId(request));
+		return model;
+	}
 
 }

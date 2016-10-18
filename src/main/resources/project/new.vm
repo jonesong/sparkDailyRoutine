@@ -1,15 +1,17 @@
 #parse("/velocity/layout.vm")
 #@mainLayout()
 
+<script src="/checklimit.js"></script>
+
 <div class="panel panel-default">
 	<div class="panel-heading">$msg.get("PROJECT_NEW")</div>
-		<form action="/project/success/" method="post">
-			<input type="text" name="name" placeholder="$msg.get("PROJECT_NAME")" value="" required autofocus>
-			<input type="text" name="note" placeholder="$msg.get("PROJECT_NOTE")" value="">
+		<form action="$WebPath.getSUCCESS_PROJECT()" method="post" onsubmit="return checkLimitNameNote()">
+			<input type="text" name="name" id="name" placeholder="$msg.get("PROJECT_NAME")" value="" required autofocus>
+			<input type="text" name="note" id="note" placeholder="$msg.get("PROJECT_NOTE")" value="">
 			<input type="submit" value="$msg.get("PROJECT_NEW")" class="btn btn-update custom-width-submit">
 		</form>	
 </div>
 
-<a href="/project/">Return to $msg.get("PROJECTS_HEADING_ALL")</a>
+<a href="$WebPath.getPROJECTS()">$msg.get("LABEL_RETURNTO") $msg.get("PROJECTS_HEADING_ALL")</a>
 
 #end

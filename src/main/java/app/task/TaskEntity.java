@@ -2,96 +2,82 @@ package app.task;
 
 import java.util.List;
 
-import org.sql2o.Connection;
-import app.common.DB;
+import app.common.AbstractEntity;
 import lombok.Data;
+import lombok.EqualsAndHashCode;
 
+@EqualsAndHashCode(callSuper = false)
 @Data // All fields are private and final. Getters and setters are generated (https://projectlombok.org/features/Value.html)
-public class TaskEntity {
+public class TaskEntity extends AbstractEntity {
 
-	private int id;
-	private int project_id;
-	private String name;
-	private String due_date;
-	private String done;
-	private String note;
-	private char deleted ='1';
-	
-	public TaskEntity(int projectId, String name, String note, String due_date){
+	int id;
+	int project_id;
+	String name;
+	String due_date;
+	String done;
+	String note;
+	String deleted = "1";
+
+	public TaskEntity(int id, int projectId, String name, String note, String due_date, String done) {
+		this.id = id;
 		this.project_id = projectId;
-		this.name = name;
-		this.note = note;
-		this.due_date = due_date;
-	}
-	
-	public TaskEntity(String id, String name, String note, String due_date, String done){
-		this.id = Integer.parseInt(id);
 		this.name = name;
 		this.note = note;
 		this.due_date = due_date;
 		this.done = correctingDone(done);
 	}
-	
+
 	/**
 	 * 
 	 * @param done
-	 * @return value to the table. If String done from request (checkbox), is checked then value is on 
+	 * @return value to the table. If String done from request (checkbox), is
+	 *         checked then value is on
 	 */
-	private String correctingDone(String done){
-		if(done == null){
+	private String correctingDone(String done) {
+		if (done == null || done.equals("1")) {
 			return "1";
 		}
 		return "0";
 	}
-	
-	public static List<TaskEntity> all(int project_id) {
-		String sql = "SELECT id, project_id, name, due_date, done, note FROM tasks where deleted='1' and project_id=:project_id ORDER BY name ASC";
-		try (Connection con = DB.sql2o.open()) {
-			return con.createQuery(sql).addParameter("project_id", project_id).executeAndFetch(TaskEntity.class);
-		}
+
+	public static List<TaskEntity> all(int project_id) throws Exception {
+		String sql = "SELECT id, project_id, name, due_date, done, note FROM tasks where deleted = 1 and project_id = :str1 ORDER BY name ASC";
+		String[] values = { String.valueOf(project_id) };
+		return queryListMultiParameter(sql, TaskEntity.class, values);
 	}
-	
-	public static TaskEntity byTask(String id, String project_id) {
-		String sql = "SELECT id, project_id, name, due_date, done, note FROM tasks where deleted='1' "
-				+ "and id=:id and project_id=:project_id ORDER BY name ASC";
-		try (Connection con = DB.sql2o.open()) {
-			TaskEntity task = con.createQuery(sql).addParameter("id", id).addParameter("project_id", project_id).executeAndFetchFirst(TaskEntity.class);
-			return task;
-		}
+
+	public static TaskEntity byTask(String id, String project_id) throws Exception {
+		String sql = "SELECT id, project_id, name, due_date, done, note FROM tasks where deleted = 1 "
+				+ "and id= :str1 and project_id = :str2 ORDER BY name ASC";
+		String[] values = { id, project_id };
+		return (TaskEntity) queryClassMultiParameter(sql, TaskEntity.class, values);
 	}
-	
-	public static String getProjectIdbyTaskId(String id) {
-		String sql = "SELECT project_id FROM tasks where deleted='1' and id=:id";
-		try (Connection con = DB.sql2o.open()) {
-			return con.createQuery(sql).addParameter("id", id).executeAndFetchFirst(String.class);
-		}
+
+	public static String getProjectIdbyTaskId(String id) throws Exception {
+		String sql = "SELECT project_id FROM tasks where deleted = 1 and id = :str1";
+		String[] values = { id };
+		return queryStringMultiParameter(sql, values);
 	}
-	
+
 	public void save() {
 		String sql = "INSERT INTO tasks(project_id, name, note, due_date) "
 				+ "VALUES (:project_id, :name, :note, :due_date)";
-		try (Connection con = DB.sql2o.open()) {
-			TaskEntity task = new TaskEntity(getProject_id(),getName(),getNote(), getDue_date());
-			con.createQuery(sql).bind(task).executeUpdate();
-			task = null;
-		}
+		recordUpdate(sql, getInstanceUpdate());
 	}
-	
+
 	public void update() {
 		String sql = "UPDATE tasks SET name = :name, note =:note, due_date =:due_date, done =:done WHERE id = :id";
-		try (Connection con = DB.sql2o.open()) {
-			con.createQuery(sql).addParameter("name", this.name).addParameter("note", this.note)
-			.addParameter("due_date", this.due_date).addParameter("done", this.done).addParameter("id", this.id).executeUpdate();
-		}
+		recordUpdate(sql, getInstanceUpdate());
 	}
-	
-	//change the deleted flag into 0
-		public void delete() {
-			String sql = "UPDATE tasks SET deleted = 0 WHERE id = :id";
-			System.out.println(id);
-			try (Connection con = DB.sql2o.open()) {
-				con.createQuery(sql).addParameter("id", this.id).executeUpdate();
-			}
-		}
 
+	// change the deleted flag into 0
+	public void delete() {
+		String sql = "UPDATE tasks SET deleted = 0 WHERE id = :id";
+		recordUpdate(sql, getInstanceUpdate());
+	}
+
+	private TaskEntity getInstanceUpdate() {
+		TaskEntity task = new TaskEntity(getId(), getProject_id(), getName(), getNote(), getDue_date(), getDone());
+		return task;
+	}
 }

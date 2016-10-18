@@ -24,9 +24,13 @@ public class RequestUtil {
         return request.session().attribute("currentUser");
     }
 	
-	public static String getSessionName(Request request) {
-        return request.session().attribute("name");
+	public static String getSessionId(Request request) {
+        return request.session().attribute("id");
     }
+	
+	public static String[] getSessionUserPages(Request request){
+		return request.session().attribute("userPages");
+	}
 	
 	public static boolean removeSessionAttrLoggedOut(Request request) {
         Object loggedOut = request.session().attribute("loggedOut");
@@ -40,6 +44,12 @@ public class RequestUtil {
         return loginRedirect;
     }
 	
+	public static boolean removeSessionAttrDuplicate(Request request) {
+        Object duplicate = request.session().attribute("duplicate");
+        request.session().removeAttribute("duplicate");
+        return duplicate != null;
+    }
+	
 	/**
 	 * 
 	 * @param request
@@ -50,6 +60,10 @@ public class RequestUtil {
     }
     
 	// request.queryParams gets the value in the page of declaring the variable name = :name
+	public static String getQueryId(Request request) {
+        return request.queryParams("id");
+    }
+	
 	public static String getQueryLocale(Request request) {
         return request.queryParams("locale");
     }
@@ -60,6 +74,14 @@ public class RequestUtil {
 
     public static String getQueryPassword(Request request) {
         return request.queryParams("password");
+    }
+    
+    public static String getQueryFirstname(Request request) {
+        return request.queryParams("first_name");
+    }
+    
+    public static String getQueryLastname(Request request) {
+        return request.queryParams("last_name");
     }
     
     public static String getQueryLoginRedirect(Request request) {

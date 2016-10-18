@@ -26,10 +26,7 @@ function checkbeforeupdate() {
 	} else {
 		var start = removeFormat(document.getElementById("time_start").value);
 		var end = removeFormat(document.getElementById("time_end").value);
-//		var total = end - start;
 		var total = checkAndDoSubtraction(start,end);
-//		var str = total.toString();
-//		document.getElementById("time_total").value = addFormat(formatTime(str));
 		document.getElementById("time_total").value = formatTime(total);
 	}
 }

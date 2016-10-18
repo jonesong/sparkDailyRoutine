@@ -11,7 +11,7 @@
 				$msg.get("TASK_EDIT", $task.getName())
 			#end
 	</div>
-		<form action="/task/" method="post" onsubmit="return checkFormatDueDate()">
+		<form action="$WebPath.getTASKS()" method="post" onsubmit="return checkFormatDueDate()">
   		<input name="taskId" type="hidden" value="$task.getId()">
 		<table>
 			<thead>
@@ -44,7 +44,11 @@
 			</tbody>
 		</table>
 		</form>
-		<div class="panel-heading">$msg.get("TODO_HISTORY", $task.getName())</div>
+		#set ($title = $task.getNote())
+		#if($title == "")
+			#set ($title = $task.getName())
+		#end
+		<div class="panel-heading">$msg.get("TODO_HISTORY", $title)</div>
 		<table>		
 			<thead>
 				<tr>
@@ -65,5 +69,5 @@
 		</table>
 	</div>	
 
-	<a href="/project/$currentProjectId/">$msg.get("TASK_RETURN")</a>
+	<a href="$WebPath.getPROJECTS()$currentProjectId/">$msg.get("TASK_RETURN")</a>
 #end

@@ -15,6 +15,7 @@
 	<filter>
 		<filter-name>SparkFilter</filter-name>
 		<filter-class>spark.servlet.SparkFilter</filter-class>
+<!-- 		<filter-class>app.util.ApplicationFilter</filter-class> -->
 		<init-param>
 			<param-name>applicationClass</param-name>
 			<param-value>main.App</param-value>

@@ -1,0 +1,20 @@
+#parse("/velocity/layout.vm")
+#@mainLayout()
+
+<div class="panel panel-default">
+	<div class="panel-heading">$msg.get("USER_NEW")</div>
+	#if($duplicate)
+		<p class="bad notification">$msg.get("USER_DUPLICATE")</p>
+	#end
+		<form action="$WebPath.getSUCCESS_USER()" method="post">
+			<input type="text" name="username" placeholder="$msg.get("USER_NAME")" value="" required autofocus>
+			<input type="text" name="password" placeholder="$msg.get("USER_PASS")" value="" required>
+			<input type="text" name="first_name" placeholder="$msg.get("USER_FIRSTNAME")" value="" required>
+			<input type="text" name="last_name" placeholder="$msg.get("USER_LASTNAME")" value="" required>
+			<input type="submit" value="$msg.get("USER_NEW")" class="btn btn-update custom-width-submit">
+		</form>	
+</div>
+
+<a href="$WebPath.getUSERS()">$msg.get("LABEL_RETURNTO") $msg.get("USERS_HEADING_ALL")</a>
+
+#end

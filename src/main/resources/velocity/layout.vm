@@ -1,20 +1,21 @@
 #macro(mainLayout)
 <html>
 <head>
-    <title>Spark Daily Routines</title>
+    <title>$msg.get("COMMON_TITLE")</title>
     <link rel="stylesheet" href="/main.css">
-    <script src="/dialogbox.js"></script>
     <link rel="icon" href="/favicon.png">
     <meta name="viewport" content="width=device-width, initial-scale=1">
 </head>
 <body>
 <header>
     <nav>
-        <a href="$WebPath.getINDEX()"><img id="logo" src="/img/logo_deepblue.png" alt="Spark Daily Routines"></a>
+        <a href="$WebPath.getINDEX()"><img id="logo" src="/img/logo_deepblue.png" alt="$msg.get("COMMON_TITLE")"></a>
         <ul id="menu">
-            <li><a href="$WebPath.getPROJECTS()">View All Projects</a></li>
             #if($currentUser)
-                <li>
+            	#foreach($userPage in $userPages)
+            		<li><a href="$WebPath.getINDEX()$userPage">$msg.get($userPage)</a></li>
+				#end
+				<li>
                     <form method="post" action="$WebPath.getLOGOUT()">
                         <button id="logout">$msg.get("COMMON_NAV_LOGOUT")</button>
                     </form>

@@ -1,0 +1,23 @@
+#parse("/velocity/layout.vm")
+#@mainLayout()
+
+<div class="panel panel-default">
+	<div class="panel-heading">$msg.get("MODULE_NEW")</div>
+	#if($duplicate)
+		<p class="bad notification">$msg.get("LABEL_DUPLICATE")</p>
+	#end
+		<form action="$WebPath.getSUCCESS_MODULE()" method="post">
+		<input name="id" type="hidden" value="$user.getId()">
+			<select name="name">
+				<option value=""></option>
+				#foreach($department in $departments)
+					<option value="$department.getName()">$department.getName()</option>
+				#end
+			</select>
+			<input type="submit" value="$msg.get("MODULE_NEW")" class="btn btn-update custom-width-submit">
+		</form>	
+</div>
+
+<a href="$WebPath.getUSERS()edit/$user.getId()">$msg.get("LABEL_RETURNTO") $msg.get("USER_RETURN", $user.getFirst_name())</a>
+
+#end
